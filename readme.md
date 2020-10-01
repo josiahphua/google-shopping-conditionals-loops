@@ -6,15 +6,14 @@ This large object is in the products js file. It is the kind of object you would
 
 
 ## Getting Started
-Create a `script.js` file and an index.html file with the same boiler plate code as before.
+Open the `script.js` file and enter your solution in this file.
 
-Make sure the `products.js` file is in that directory.
+Make sure the `products.js` file is in the same directory.
 
-In the html file, include the script `products.js`. Remember that the order of the script tags matters.
 
 ### Hint
 It's very important to understand the structure of the `products` object.
-Use the console to look at this object. When you type the `product` variable into the console, it becomes interactive.
+Use the console to look at this object. 
 
 Paste in the code that can access certain parts of the object and see what values, if any, you get out.
 
