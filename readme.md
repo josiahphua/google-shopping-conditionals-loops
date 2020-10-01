@@ -15,13 +15,11 @@ This large object is in the products js file. It is the kind of object you would
 It's very important to understand the structure of the `products` object.
 Use the console to look at this object. 
 
-Paste in the code that can access certain parts of the object and see what values, if any, you get out.
+Run the code that can access certain parts of the object and see what values, if any, you get out.
 
-Example `cats[1].allergies[6]` - if you don't see anything back up- try the thing above: `cats[1].allergies`
+Example `cats[1].allergies[6]` - if you don't see anything back up (go to a higher level in the object) i.e. `cats[1].allergies`
 
 ## Deliverables
-
-Use the product search result in your file to find the following results.
 
 Note that you may want to comment out your solutions as you solve them, to avoid a mess of output in the console.
 
