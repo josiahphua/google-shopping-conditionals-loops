@@ -1,166 +1,68 @@
-// ************ SOLUTIONS TO GOOGLE SHOPPING CONDITIONALS ************
-// *******************************************************************
+// require products from './products'
+const products = require('./products')
 
-// requre products from './products'
-const products = require('./products');
-console.log(products.totalItems);
+//1
+  /**
+   * Reduce only returns one value.
+   * Logic: if the condition is a match increment initial value by 1
+   */
+  /
+let count = products.items.reduce((t, c) =>  (c.kind == 'shopping#product') && t + 1, 0 )
+console.log(count)
 
-console.log("\n---------------\n")
+//2
+  /**
+   * Filter by condition then use map to create array of certain elements in array
+   * ---map return a new array
+   */
+  /
+let sol2 = products.items.filter(el =>el.product.inventories[0].availability == "backorder").map(elm => elm.product.title )
+
+console.log(sol2);
+
+//3
+let sol3 = products.items.filter(el => el.product.images.length > 1).map(el => el.product.title)
+console.log(sol3)
+
+
+//4
+let sol4 = products.items.filter(el => el.product.title.includes('Canon')).map(elm => elm.product.title)
+console.log(sol4)
+
+
+//5.
+let sol5 = products.items
+              .filter(el => el.product.title.includes('Canon') && el.product.author.name.includes('eBay'))
+              .map(elm => elm.product.title)
+console.log(sol5)
 
 
 
-// --------------------------------------
-// Go through the items and find all results that have kind of shopping#product. Print the count of these results. Where else is this count information stored in the search results?
-// --------------------------------------
+//6
+//An object can also be decleared using an {}
+let sol6 = products.items.map(el => {
+  let result = {}
+  result.brand = el.product.brand
+  result.price = el.product.inventories[0].price;
+  result.image_link = el.product.images[0].link;
 
-function countShoppingProducts() {
-    let count = 0;
-    for (const i in products["items"]) {
-      if (products["items"][i]["kind"] === "shopping#product") {
-        count += 1
-      }
-    }
-    return count
+  return result
+})
+console.log(sol6)
+
+
+//7
+const brandProducts = (brand, condition) => {
+  let result = products.items.filter((elm) => (
+    elm.product.brand === brand && elm.product.condition === condition
+  ))
+  //tenery operator for a quick if and else
+  // if result length is 0 - falsey then
+  // show nothing found 0 = false and not false is true
+  // else show result
+  return !result.length ? "Nothing found" : result
 }
 
-countShoppingProducts();
 
-console.log("\n---------------\n")
-
-// --------------------------------------
-// Print the title of all items with a backorder availability in inventories.
-// --------------------------------------
-
-searchBackorderAvailability = () => {
-    for (const i in products["items"]) {
-      let check = products["items"][i]["product"]["inventories"][0]["availability"]
-      if (check === "backorder") {
-        console.log(products["items"][i]["product"]["title"])
-      }
-    }
-}
-
-searchBackorderAvailability();
-
-// See below if you want to search any availability
-
-// function searchAvailability (search) {
-//     for (const i in products["items"]) {
-//       let check = products["items"][i]["product"]["inventories"][0]["availability"]
-//       if (check === search) {
-//         console.log(products["items"][i]["product"]["title"])
-//       }
-//     }
-//   }
-
-// searchAvailability("backorder");
-
-console.log("\n---------------\n")
-
-// --------------------------------------
-// Print the title of all items with more than one image link.
-// --------------------------------------
-
-function multiImageItems() {
-    for (const i in products["items"]) {
-      let imageObj = products["items"][i]["product"]["images"]
-      if (Object.keys(imageObj).length > 1) {
-        console.log(products["items"][i]["product"]["title"])
-      }
-    }
-}
-
-multiImageItems();
-console.log("\n---------------\n")
-
-// --------------------------------------
-// Print all "Canon" products in the items (careful with case sensitivity).
-// --------------------------------------
-
-function searchCanon() {
-    for (const i in products["items"]) {
-      if (products["items"][i]["product"]["brand"].toLowerCase() === "canon") {
-        console.log(products["items"][i]["product"]["title"])
-      }
-    }
-}
-
-searchCanon();
-
-// The function below works for Canon products but also for any other brands.
-
-// function searchBrand(search) {
-//     for (const i in products["items"]) {
-//       if (products["items"][i]["product"]["brand"].toLowerCase() === search.toLowerCase()) {
-//         console.log(products["items"][i]["product"]["title"])
-//       }
-//     }
-//  }
-
-//  searchBrand("canon");
-
-
-console.log("\n---------------\n");
-
-// --------------------------------------
-// Print all items that have an author name of "eBay" and are brand "Canon".
-// --------------------------------------
-
-// For the author, sometimes you find 2 words so if you use a d, it won't return all the results. Hence why you use includes().
-
-function searchEbayCanon() {
-    for (const i in products["items"]) {
-      if (products["items"][i]["product"]["author"]["name"].toLowerCase().includes("ebay") === true 
-        && products["items"][i]["product"]["brand"].toLowerCase() === "canon") {
-        console.log(products["items"][i]["product"]["title"])
-      }
-    }
-}
-
-searchEbayCanon();
-
-// The function below works for the eBay and Canon but also for any other similar search.
-
-// function searchbyAuthorBrand(author, brand) {
-//     for (const i in products["items"]) {
-//       if (products["items"][i]["product"]["author"]["name"].toLowerCase().includes(author.toLowerCase()) === true 
-//         && products["items"][i]["product"]["brand"].toLowerCase() === brand.toLowerCase()) {
-//         console.log(products["items"][i]["product"]["title"])
-//       }
-//     }
-// }
-
-// searchbyAuthorBrand("eBay", "Canon");
-
-console.log("\n---------------\n");
-
-// --------------------------------------
-// Print all the products with their brand, price, and an image link
-// --------------------------------------
-
-function showAllWithBrandPriceImg() {
-    for (const i in products["items"]) {
-      console.log("Product: " + products["items"][i]["product"]["title"])
-      console.log("Brand: " + products["items"][i]["product"]["brand"])
-      console.log("Price: " + products["items"][i]["product"]["inventories"][0]["price"])
-      console.log("Image Link: " + products["items"][i]["product"]["images"][0]["link"])
-      console.log("---------------------");
-    }
-}
-showAllWithBrandPriceImg();
-
-// Alternatively, you can use template litterals to make it look cleaner both in your code and in terminal
-// For more, you can watch this video: https://www.youtube.com/watch?v=NgF9-pdTDGs
-
-// function showBrandPriceImage() {
-//     for (const i in products["items"]) {
-//       console.log(`
-//       Product: ${products["items"][i]["product"]["title"]}
-//       Brand: ${products["items"][i]["product"]["brand"]}
-//       Price: $${products["items"][i]["product"]["inventories"][0]["price"]}
-//       Image Link: ${products["items"][i]["product"]["images"][0]["link"]}`)
-//     }
-// }
-// showBrandPriceImage();
-
-console.log("\n---------------\n");
+console.log(brandProducts('Samsung','new'))
+console.log(brandProducts('Samsun','new'))
